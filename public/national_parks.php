@@ -2,29 +2,21 @@
 
 // connnect to db, present db connection as $connection variable
 
-require __DIR__ . "/../db_connect.php";
+require __DIR__ . "/../park.php";
 
 // Input is talking to the request superglobal
 
-require_once '../Input.php';
+require __DIR__ . '/../Input.php';
+
 
 $page = Input::get('page', 1);
 $limit = 4;
 $offset = $limit * ($page - 1);
-$totalParks = $connection->query("SELECT count (*) FROM national_parks")->fetchColumn();
+$totalParks = Park::count();
+$parks = Park::paginate($page, $limit);
 
 if($_POST) {
-  $userInput = "INSERT into national_parks (name, location, date_established, area_in_acres, description)
-              VALUES (:name, :location, :date_established, :area_in_acres, :description)";
-
-    $statement = $connection->prepare($userInput);
-    $statement->bindValue(':name', Input::get("nameInput"), PDO::PARAM_STR);
-    $statement->bindValue(':location', Input::get("locationInput"), PDO::PARAM_STR);
-    $statement->bindValue(':date_established', Input::get("dateInput"), PDO::PARAM_STR);
-    $statement->bindValue(':area_in_acres', Input::get("areaInput"), PDO::PARAM_STR);
-    $statement->bindValue(':description', Input::get("descInput"), PDO::PARAM_STR);
-
-    $statement->execute();
+    Park::insert();
     header('location: national_parks.php');
 }
 
@@ -39,16 +31,12 @@ $maxPage = ($totalParks / $limit) - 1;
 // $parks = [];
 
 // get all parks with a limit per page using prepare statments
-$statement = $connection->prepare("SELECT * FROM national_parks LIMIT :limit OFFSET :offset");
-$statement->bindValue(':limit', $limit, PDO::PARAM_INT);
-$statement->bindValue(':offset', $offset, PDO::PARAM_INT);
 
-$statement->execute();
 
-while ($park = $statement->fetch(PDO::FETCH_ASSOC))
-{
-$parks[] = $park;
-}
+// while ($park = $statement->fetch(PDO::FETCH_ASSOC))
+// {
+// $parks[] = $park;
+// }
 
 
 ?>
