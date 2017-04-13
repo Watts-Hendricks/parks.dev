@@ -1,0 +1,32 @@
+
+body {
+  font-family: 'PT Mono', monospace;
+  background: url("/img/wallpaper_oldfaithful_800x600.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+h1 {
+  color: white;
+  text-align: center;
+  text-decoration: underline;
+}
+
+h2 {
+  text-decoration: underline;
+  text-align: center;
+  color: white;
+}
+a:hover {
+  text-decoration: none;
+}
+
+.form-control {
+  width: 40%;
+}
+
+.formBoxName {
+  text-decoration: white;
+}
