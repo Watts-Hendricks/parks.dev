@@ -17,18 +17,18 @@
  //           echo $park->description . PHP_EOL;
  //           echo $park->areaInAcres . PHP_EOL;
  //      }
-  
+
  // // * Inserting a new record into the database
- 
+
  //       $park = new Park();
  //       $park->name = 'Acadia';
  //       $park->location = 'Maine';
  //       $park->areaInAcres = 48995.91;
  //       $park->dateEstablished = '1919-02-26';
- 
+
  //       $park->insert();
- 
- 
+
+
 class Park
 {
 
@@ -58,16 +58,13 @@ class Park
         // TODO: call dbConnect to ensure we have a database connection
 
         self::dbConnect();
-
+        // TODO: use the $dbc static property to query the database for the
+        //       number of existing park records
     $statement = self::$dbc->prepare("SELECT count(*) FROM national_parks");
-
 
     $statement->execute();
 
     return $statement->fetchColumn();
-
-        // TODO: use the $dbc static property to query the database for the
-        //       number of existing park records
     }
 
     /**
@@ -75,11 +72,21 @@ class Park
      */
     public static function all() {
         // TODO: call dbConnect to ensure we have a database connection
+        self::dbConnect();
         // TODO: use the $dbc static property to query the database for all the
         //       records in the parks table
+        $statement = self::$dbc->prepare("SELECT * FROM national_parks");
+        $statement->execute();
+
         // TODO: iterate over the results array and transform each associative
         //       array into a Park object
+        $parks = array();
+        while ($park = $statement->fetch(PDO::FETCH_ASSOC)) {
+            $parks[] = $park;
+        }
+
         // TODO: return an array of Park objects
+        return $parks;
     }
 
     /**
