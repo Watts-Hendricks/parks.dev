@@ -1,7 +1,7 @@
 
 body {
   font-family: 'PT Mono', monospace;
-  background: url("/img/wallpaper_oldfaithful_800x600.jpg") no-repeat center center fixed;
+  background: url("/wallpaper_oldfaithful_800x600.jpg") no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

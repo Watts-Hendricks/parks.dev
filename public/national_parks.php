@@ -63,7 +63,7 @@ $parks[] = $park;
     <!-- latest compiled and minified CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <!-- custom CSS -->
-    <link rel="stylesheet" href="/css/national_parks.css">
+    <link rel="stylesheet" href="/national_parks.css"> 
 
     <title>National Parks</title>
 </head>
