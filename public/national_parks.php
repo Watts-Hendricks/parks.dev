@@ -17,16 +17,14 @@ $parks = Park::paginate(4, $offset);
 
 	if(!empty($_POST)) {
 
-
-
-		insert();
-		// $park = new Park();
-		// $park->name = Input::get('name');
-		// $park->location = Input::get('location');
-		// $park->dateEstablished = Input::get('date_established');
-		// $park->areaInAcres = Input::get('area_in_acres');
-		// $park->description = Input::get('description');
-		header('location: national_parks.php');
+		$park = new Park();
+		$park->name = Input::get('name');
+		$park->location = Input::get('location');
+		$park->dateEstablished = Input::get('date_established');
+		$park->areaInAcres = Input::get('area_in_acres');
+		$park->description = Input::get('description');
+    $park->insert();
+		// header('location: national_parks.php');
 }
 
 
@@ -122,23 +120,23 @@ $maxPage = ($totalParks / $limit) - 1;
                     <form method="POST">
                       <div class="form-group">
                         <label class ="formBoxTitle" for="nameInput">Name</label>
-                          <input type="text" class="form-control" id="nameInput" name="nameInput" placeholder="Name">
+                          <input type="text" class="form-control" id="nameInput" name="name" placeholder="Name">
                       </div>
                       <div class="form-group">
                         <label class ="formBoxTitle" for="locationInput">Location</label>
-                        <input type="text" class="form-control" id="locationInput" name="locationInput" placeholder="Location">
+                        <input type="text" class="form-control" id="locationInput" name="location" placeholder="Location">
                       </div>
                       <div class="form-group">
                         <label class ="formBoxTitle" for="dateInput">Date Established</label>
-                        <input type="text" class="form-control" id="dateInput" name="dateInput" placeholder="YYYY-MM-DD">
+                        <input type="text" class="form-control" id="dateInput" name="date_established" placeholder="YYYY-MM-DD">
                       </div>
                       <div class="form-group">
                         <label class ="formBoxTitle" for="areaInput">Area in Acres</label>
-                        <input type="text" class="form-control" id="areaInput" name="areaInput" placeholder="1111.11">
+                        <input type="text" class="form-control" id="area_in_acres" name="area_in_acres" placeholder="1111.11">
                       </div>
                       <div class="form-group">
                         <label class ="formBoxTitle" for="descInput">Description</label>
-                        <input type="text" class="form-control" id="descInput" name="descInput" placeholder="Description">
+                        <input type="text" class="form-control" id="descInput" name="description" placeholder="Description">
                       </div>
                       <div class="col-md-4 text-center">
                       <button type="submit" class="btn btn-primary">
