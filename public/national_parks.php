@@ -2,7 +2,7 @@
 
 // connnect to db, present db connection as $connection variable
 
-require __DIR__ . "/../park.php";
+require __DIR__ . "/../Park.php";
 
 // Input is talking to the request superglobal
 
@@ -13,12 +13,25 @@ $page = Input::get('page', 1);
 $limit = 4;
 $offset = $limit * ($page - 1);
 $totalParks = Park::count();
-$parks = Park::paginate($page, $limit);
+$parks = Park::paginate(4, $offset);
 
-if($_POST) {
-    Park::insert();
-    header('location: national_parks.php');
+	if(!empty($_POST)) {
+
+
+
+		insert();
+		// $park = new Park();
+		// $park->name = Input::get('name');
+		// $park->location = Input::get('location');
+		// $park->dateEstablished = Input::get('date_established');
+		// $park->areaInAcres = Input::get('area_in_acres');
+		// $park->description = Input::get('description');
+		header('location: national_parks.php');
 }
+
+
+
+
 
 // protect from looking at blank pages past the number of results
 
@@ -51,7 +64,7 @@ $maxPage = ($totalParks / $limit) - 1;
     <!-- latest compiled and minified CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <!-- custom CSS -->
-    <link rel="stylesheet" href="/national_parks.css"> 
+    <link rel="stylesheet" href="/national_parks.css">
 
     <title>National Parks</title>
 </head>

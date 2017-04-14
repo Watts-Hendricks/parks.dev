@@ -91,7 +91,7 @@ class Park
     /**
      * returns $resultsPerPage number of results for the given page number
      */
-    public static function paginate($limit, $offset = 4) {
+    public static function paginate($limit, $offset) {
         // TODO: call dbConnect to ensure we have a database connection
         self::dbConnect();
         // TODO: calculate the limit and offset needed based on the passed
@@ -132,13 +132,13 @@ class Park
     public function insert() {
         // TODO: call dbConnect to ensure we have a database connection
         self::dbConnect();
-        // TODO: use the $dbc static property to create a perpared statement for
+        // TODO: use the $dbc static property to create a prepared statement for
         //       inserting a record into the parks table
 
         $userInput = "INSERT into national_parks (name, location, date_established, area_in_acres, description)
                     VALUES (:name, :location, :date_established, :area_in_acres, :description)";
         // TODO: use the $this keyword to bind the values from this object to
-        //       the prepared statement            
+        //       the prepared statement
         $statement = self::$dbc->prepare($userInput);
         $statement->bindValue(':name', $this->name, PDO::PARAM_STR);
         $statement->bindValue(':location', $this->location, PDO::PARAM_STR);
