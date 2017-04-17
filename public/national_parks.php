@@ -1,5 +1,6 @@
 <?php
 
+
 // connnect to db, present db connection as $connection variable
 
 require __DIR__ . "/../Park.php";
@@ -8,48 +9,52 @@ require __DIR__ . "/../Park.php";
 
 require __DIR__ . '/../Input.php';
 
-
 $page = Input::get('page', 1);
 $limit = 4;
 $offset = $limit * ($page - 1);
 $totalParks = Park::count();
 $parks = Park::paginate(4, $offset);
+$errors = [];
 
-	if(!empty($_POST)) {
+if(!empty($_POST)) {
 
-		$park = new Park();
-		$park->name = Input::get('name');
-		$park->location = Input::get('location');
-		$park->dateEstablished = Input::get('date_established');
-		$park->areaInAcres = Input::get('area_in_acres');
-		$park->description = Input::get('description');
-    $park->insert();
-		// header('location: national_parks.php');
+	$park = new Park();
+
+	try {
+		$park->name = Input::getString('name');
+	} catch (Exception $e) {
+		$errors[] = $e->getMessage();
+	}
+
+	try {
+		$park->location = Input::getString('location');
+	} catch (Exception $e) {
+		$errors[] = $e->getMessage();
+	}
+
+	try {
+		$park->dateEstablished = Input::getDate('date_established');
+	} catch (Exception $e) {
+		$errors[] = $e->getMessage();
+	}
+
+	try {
+		$park->areaInAcres = Input::getNumber('area_in_acres');
+	} catch (Exception $e) {
+		$errors[] = $e->getMessage();
+	}
+
+	try {
+		$park->description = Input::getString('description');
+	} catch (Exception $e) {
+		$errors[] = $e->getMessage();
+	}
+	if(empty($errors)) {
+		$park->insert();
+	}
 }
-
-
-
-
-
 // protect from looking at blank pages past the number of results
-
 $maxPage = ($totalParks / $limit) - 1;
-
-// get all parks with a limit per page
-//
-// $query = "SELECT * FROM national_parks LIMIT {$limit} OFFSET {$offset}";
-// $statement = $connection->query($query);
-// $parks = [];
-
-// get all parks with a limit per page using prepare statments
-
-
-// while ($park = $statement->fetch(PDO::FETCH_ASSOC))
-// {
-// $parks[] = $park;
-// }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -69,6 +74,7 @@ $maxPage = ($totalParks / $limit) - 1;
 
 <body>
     <main class="container">
+			<?php if(!empty($errors)) : ?><?php echo "<script type='text/javascript'> alert('".implode('\n', $errors)."') </script>"; ?> <?php endif; ?>
         <h1>National Parks</h1>
         <div class="table-responsive">
             <table class="table table-striped table-bordered">
@@ -128,7 +134,7 @@ $maxPage = ($totalParks / $limit) - 1;
                       </div>
                       <div class="form-group">
                         <label class ="formBoxTitle" for="dateInput">Date Established</label>
-                        <input type="text" class="form-control" id="dateInput" name="date_established" placeholder="YYYY-MM-DD">
+                        <input type="text" class="form-control" id="dateInput" name="date_established" placeholder="YYYY/MM/DD">
                       </div>
                       <div class="form-group">
                         <label class ="formBoxTitle" for="areaInput">Area in Acres</label>
